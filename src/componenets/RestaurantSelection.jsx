@@ -5,7 +5,7 @@ import { Building2, ArrowRight } from 'lucide-react';
 // File: src/components/RestaurantSelection.jsx
 // Component: RestaurantSelection
 // Purpose: Allow restaurant owners to select their restaurant before managing menu items
-
+const apiUrl = import.meta.env.VITE_API_URL;
 const RestaurantSelection = ({ onRestaurantSelect }) => {
   const [restaurants, setRestaurants] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,7 +16,7 @@ const RestaurantSelection = ({ onRestaurantSelect }) => {
     const fetchRestaurants = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/restaurants/owner-restaurants', {
+        const response = await axios.get(`${apiUrl}/restaurants/owner-restaurants`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

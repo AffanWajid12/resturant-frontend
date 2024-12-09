@@ -5,7 +5,7 @@ import { Plus, Edit, Trash2, Search, ImagePlus, X } from 'lucide-react';
 // File: src/components/MenuItemsManagement.jsx
 // Component: MenuItemsManagement
 // Purpose: Manage menu items for a specific restaurant (CRUD operations)
-
+const apiUrl = import.meta.env.VITE_API_URL;
 const MenuItemsManagement = ({ restaurantId, onBackToSelection }) => {
   const [menuItems, setMenuItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +38,7 @@ const MenuItemsManagement = ({ restaurantId, onBackToSelection }) => {
     const fetchMenuItems = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:5000/api/${restaurantId}/menu-items`, {
+        const response = await axios.get(`${apiUrl}/${restaurantId}/menu-items`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -183,7 +183,7 @@ const MenuItemsManagement = ({ restaurantId, onBackToSelection }) => {
       
       if (modalMode === 'add') {
         // Add new menu item
-        const response = await axios.post(`http://localhost:5000/api/${restaurantId}/menu-items`, 
+        const response = await axios.post(`${apiUrl}/${restaurantId}/menu-items`, 
           submissionData, 
           {
             headers: {
@@ -195,7 +195,7 @@ const MenuItemsManagement = ({ restaurantId, onBackToSelection }) => {
         setMenuItems([...menuItems, response.data]);
       } else {
         // Update existing menu item
-        const response = await axios.put(`http://localhost:5000/api/menu-items/${selectedMenuItem._id}`, 
+        const response = await axios.put(`${apiUrl}/menu-items/${selectedMenuItem._id}`, 
           submissionData, 
           {
             headers: {
@@ -239,7 +239,7 @@ const MenuItemsManagement = ({ restaurantId, onBackToSelection }) => {
     if (window.confirm('Are you sure you want to delete this menu item?')) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5000/api/menu-items/${itemId}`, {
+        await axios.delete(`${apiUrl}/menu-items/${itemId}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
