@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Trash2, Edit, Plus } from 'lucide-react';
-
+const apiUrl = import.meta.env.VITE_API_URL;
 const RestaurantManagement = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
@@ -75,7 +75,7 @@ const openEditModal = (restaurant) => {
           throw new Error('No authentication token found');
         }
 
-        const response = await axios.get('http://localhost:5000/api/restaurants/owner-restaurants', {
+        const response = await axios.get(`${apiUrl}/restaurants/owner-restaurants`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -132,7 +132,7 @@ const openEditModal = (restaurant) => {
       }
 
       const response = await axios.post(
-        'http://localhost:5000/api/restaurants',
+        `${apiUrl}/restaurants`,
         {
           ...restaurantForm,
         },
@@ -163,7 +163,7 @@ const openEditModal = (restaurant) => {
       }
 
       const response = await axios.put(
-        `http://localhost:5000/api/restaurants/${selectedRestaurant._id}`,
+        `${apiUrl}/restaurants/${selectedRestaurant._id}`,
         restaurantForm,
         {
           headers: {
@@ -191,7 +191,7 @@ const openEditModal = (restaurant) => {
       }
   
       // Make API request to delete the restaurant
-      const response = await axios.delete(`http://localhost:5000/api/restaurants/${restaurantId}`, {
+      const response = await axios.delete(`${apiUrl}/restaurants/${restaurantId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
