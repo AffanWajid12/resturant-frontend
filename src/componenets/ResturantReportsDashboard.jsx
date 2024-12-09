@@ -5,7 +5,7 @@ import { TabsContent, Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Download, TrendingUp, DollarSign, ShoppingCart } from 'lucide-react';
-
+const apiUrl = import.meta.env.VITE_API_URL;
 const RestaurantAnalyticsDashboard = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState('');
@@ -28,7 +28,7 @@ const RestaurantAnalyticsDashboard = () => {
   const fetchRestaurants = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/restaurants/owner-restaurants', {
+      const response = await axios.get(`${apiUrl}/restaurants/owner-restaurants`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setRestaurants(response.data);
@@ -43,7 +43,7 @@ const RestaurantAnalyticsDashboard = () => {
   const fetchAnalytics = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:5000/api/sales-report', {
+      const response = await axios.post(`${apiUrl}/sales-report`, {
         restaurantId: selectedRestaurant,
         period: period
       }, {
@@ -61,7 +61,7 @@ const RestaurantAnalyticsDashboard = () => {
   const fetchPopularItems = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:5000/api/popular-items', {
+      const response = await axios.post(`${apiUrl}/popular-items`, {
         restaurantId: selectedRestaurant
       }, {
         headers: { 
@@ -78,7 +78,7 @@ const RestaurantAnalyticsDashboard = () => {
   const handleExport = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:5000/api/export-data', {
+      const response = await axios.post(`${apiUrl}/export-data`, {
         restaurantId: selectedRestaurant,
         format: exportFormat
       }, {
