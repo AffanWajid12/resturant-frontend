@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import OrderCard from './OrderCard';
-
+const apiUrl = import.meta.env.VITE_API_URL;
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState('');
@@ -18,7 +18,7 @@ const OrderList = () => {
         }
 
         // Make an API request with the token
-        const response = await axios.get('http://localhost:5000/api/orders', {
+        const response = await axios.get(`${apiUrl}/orders`, {
           role:role,
           headers: {
             Authorization: `Bearer ${token}`, // Send token as Bearer in Authorization header

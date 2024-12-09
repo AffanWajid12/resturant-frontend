@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; 
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -11,7 +12,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${apiUrl}/auth/login`, {
         email,
         password,
       });
@@ -24,6 +25,7 @@ const Login = () => {
       // Redirect to the /dashboard route
       navigate('/dashboard');
     } catch (err) {
+      console.log(err)
       setError(err.response?.data?.message || 'Login failed');
     }
   };

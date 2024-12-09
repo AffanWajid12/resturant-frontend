@@ -3,6 +3,7 @@
   import React, { useState } from 'react';
   import axios from 'axios';
 import StatusDropdown from './StatusDropdown';
+const apiUrl = import.meta.env.VITE_API_URL;
     const formatPKR = (amount) => {
         return new Intl.NumberFormat('en-PK', {
           style: 'currency',
@@ -23,7 +24,7 @@ import StatusDropdown from './StatusDropdown';
           return;
         }
         await axios.patch(
-            `http://localhost:5000/api/orders/${order._id}/status`,
+            `${apiUrl}/orders/${order._id}/status`,
             { orderStatus: newStatus }, // Data payload
             {
               headers: {
